@@ -251,17 +251,28 @@ public class PVP extends Activity {
                     checkWinningBoard();
 
                     if (!game_over) {
-                        make_AI_move.update(tictactoeboard_2d);
-                        int [] coordinates = make_AI_move.move();
-                        int index = cartesiantoboard(coordinates[0], coordinates[1]);
-                        if (index == -1) {
-                            Log.e("PVP", "you got invalid coordinates! oh no what happened?");
+                        if ((number_of_moves == 2) && (tictactoeboard[4] == 0)) {
+                            Log.e("PVP", "hardcoded case");
+                            tictactoeboard[4] = -1;
+                            convertBoard(4, -1);
+                            buttons.get(4).setBackgroundResource(player_two_symbol);
+                            log_board();
+                            checkWinningBoard();
                         }
-                        tictactoeboard[index] = -1;
-                        convertBoard(index, -1);
-                        buttons.get(index).setBackgroundResource(player_two_symbol);
-                        log_board();
-                        checkWinningBoard();
+                        else {
+                            int[] coordinates = make_AI_move.move();
+                            make_AI_move.update(tictactoeboard_2d);
+                            //Log.e("PVP", "" + coordinates[0] + ", " + coordinates[1]);
+                            int index = cartesiantoboard(coordinates[0], coordinates[1]);
+                            if (index == -1) {
+                                Log.e("PVP", "you got invalid coordinates! oh no what happened?");
+                            }
+                            tictactoeboard[index] = -1;
+                            convertBoard(index, -1);
+                            buttons.get(index).setBackgroundResource(player_two_symbol);
+                            log_board();
+                            checkWinningBoard();
+                        }
                     }
                 }
             }
